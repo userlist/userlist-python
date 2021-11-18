@@ -8,9 +8,9 @@ import time
 sys.path.append(os.getcwd())
 
 
-from userlist import const, utils
-from userlist.userlist_auth import UserlistApiAuth
-from userlist.userlist_exception import UserlistApiException
+from userlist_python import const, utils
+from userlist_python.userlist_auth import UserlistApiAuth
+from userlist_python.userlist_exception import UserlistApiException
 
 
 class UserlistApiClient(object):

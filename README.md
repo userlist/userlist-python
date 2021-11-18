@@ -2,7 +2,7 @@
 
 The official Python client library to manipulate [Userlist](https://userlist.com/) from your Python application.
 
-Documentation is identical with the API documentation. The same parameters and filters are available. 
+Documentation is identical with the API documentation. The same parameters and filters are available.
 And the same response structure. You can have a look at [Docs](https://userlist.com/docs/getting-started/integration-guide/#setting-up-the-integration).
 
 ## Authentication
@@ -17,7 +17,7 @@ Check your Push key at [Userlist Settings](https://app.userlist.com/settings/pus
 ## Quick Start
 Import installed package.
 
-`````from userlist import UserlistApiClient`````
+`````from userlist_python import UserlistApiClient`````
 
 Init the instance with an API key given after registration.
 
@@ -80,7 +80,7 @@ response = userlist_client.push_companies(
  ```
 
 ### Deleting Companies (/companies/{{identifier}})
-You can remove company data by sending a DELETE request to `https://push.userlist.com/companies/{{identifier}}`. 
+You can remove company data by sending a DELETE request to `https://push.userlist.com/companies/{{identifier}}`.
 The identifier is the same one you sent when sending the company data initially. We’ll process your deletion request
 within a few of moments and remove the company, all its events, as well as all relationships to users. The users that
 where part of that company are not deleted automatically. If you send any data or event with this company after
@@ -107,7 +107,7 @@ response = userlist_client.push_relationships(
  ```
 
 ### Deleting relationships (/relationships/{{user-identifier}}/{{company-identifier}})
-You can remove a relationship data by sending a DELETE request to 
+You can remove a relationship data by sending a DELETE request to
 `https://push.userlist.com/relationships/{{user-identifier}}/{{company-identifier}}`. We’ll process your deletion
 request within a few of moments and remove the relationship between this user and this company. Both the associated user
 and company are not deleted automatically.

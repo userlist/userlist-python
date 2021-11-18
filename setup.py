@@ -18,11 +18,11 @@ TESTS_REQUIRE = ["pytest"]
 
 if __name__ == "__main__":
     setup(
-        name="userlist",
+        name="userlist-python",
         version=VERSION,
         author="Maksym Sugonyaka",
         author_email="maksym@newscatcherapi.com",
-        url="https://github.com/NewscatcherAPI/newscatcherapi-sdk-python",
+        url="https://github.com/userlist/userlist-python",
         packages=find_packages(),
         install_requires=INSTALL_REQUIRES,
         tests_require=TESTS_REQUIRE,

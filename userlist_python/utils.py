@@ -1,5 +1,5 @@
 from __future__ import unicode_literals
-from userlist import const
+from userlist_python import const
 import datetime
 
 import sys

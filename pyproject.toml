@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "userlist"
+name = "userlist-python"
 version = "0.1.0"
 description = "Official UserList SDK for Python"
 authors = ["Maksym Sugonyaka <maksym@newscatcherapi.com>"]
@@ -7,7 +7,7 @@ readme = "README.md"
 
 homepage = "https://userlist.com/"
 license = "MIT"
-keywords = ["Emailing","Userlist", 'marketing']
+keywords = ["Emailing", "Userlist", "marketing"]
 
 [tool.poetry.dependencies]
 python = ">=3.6.0"

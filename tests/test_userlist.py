@@ -1,8 +1,8 @@
-from userlist.userlist_auth import UserlistApiAuth
+from userlist_python.userlist_auth import UserlistApiAuth
 
 import os
 import unittest
-from userlist.userlist_client import UserlistApiClient
+from userlist_python.userlist_client import UserlistApiClient
 
 class UserlistApiTest(unittest.TestCase):
     def setUp(self):
@@ -18,5 +18,3 @@ class UserlistApiTest(unittest.TestCase):
     #     assert userlist.request_method['Content-Type'] == 'application/json; charset=utf-8'
     #     assert userlist.request_method['Accept'] == 'application/json'
     #     assert userlist.request_method['Authorization'] == 'Push ' + self.key
-
-
