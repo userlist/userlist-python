@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "userlist"
+version = "0.1.0"
+description = "Official UserList SDK for Python"
+authors = ["Maksym Sugonyaka <maksym@newscatcherapi.com>"]
+readme = "README.md"
+
+homepage = "https://userlist.com/"
+license = "MIT"
+keywords = ["Emailing","Userlist", 'marketing']
+
+[tool.poetry.dependencies]
+python = ">=3.6.0"
+pendulum = "^1.4"
+
+
+[tool.poetry.dev-dependencies]
+pytest = "^5.2"
+requests="^2.24.0"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
