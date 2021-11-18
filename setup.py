@@ -28,5 +28,5 @@ if __name__ == "__main__":
         tests_require=TESTS_REQUIRE,
         description="An official Python client for the Userlist API",
         download_url="",
-        keywords=["userlist", "marketing emailing"],
+        keywords=["userlist", "marketing email"],
     )
