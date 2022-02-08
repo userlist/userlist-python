@@ -38,7 +38,7 @@ class UserlistApiClient(object):
 
     def push_users(
             self,
-            identifier,
+            identifier=None,
             email=None,
             signed_up_at=None,
             last_seen_at=None,
@@ -46,7 +46,6 @@ class UserlistApiClient(object):
             company=None,
             companies=None,
             relationships=None
-
     ):
 
         """Call the `/users` endpoint.
@@ -54,8 +53,8 @@ class UserlistApiClient(object):
           Push users data into Userlist
 
 
-          :param identifier: A unique identifier for that user within your application. (required)
-          :type identifier: str
+          :param identifier: A unique identifier for that user within your application.
+          :type identifier: str or None
 
           :param email: Email of a user
           :type email: str or None
@@ -87,9 +86,10 @@ class UserlistApiClient(object):
 
 
         # identifier
-        if not identifier:
-            raise ValueError("identifier is a required param. Please fill it in.")
-        else:
+        if not identifier and not email:
+            raise ValueError("Missing required parameter identifier or email")
+
+        if identifier is not None:
             payload["identifier"] = identifier
 
         if email is not None:
