@@ -1,138 +1,215 @@
-# Userlist SDK for Python
+# Userlist Python [![Tests](https://github.com/userlist/userlist-python/actions/workflows/test.yml/badge.svg)](https://github.com/userlist/userlist-python/actions/workflows/test.yml)
 
-The official Python client library to manipulate [Userlist](https://userlist.com/) from your Python application.
-
-Documentation is identical with the API documentation. The same parameters and filters are available.
-And the same response structure. You can have a look at [Docs](https://userlist.com/docs/getting-started/integration-guide/#setting-up-the-integration).
-
-## Authentication
-
-The Authentication is done via the `push_key` variable.
-
-Check your Push key at [Userlist Settings](https://app.userlist.com/settings/push).
+This library helps with integrating Userlist into Python applications.
 
 ## Installation
-```pip install userlist```
 
-## Quick Start
-Import installed package.
+This library can be installed via pip:
 
-`````from userlist_python import UserlistApiClient`````
-
-Init the instance with an API key given after registration.
-
-````userlist_client = UserlistApiClient('YOUR_API_KEY')````
-
-## Endpoints
-An instance of `UserlistApiClient` has all main methods that correspond to endpoints available for UserList API.
-
-### Tracking user data (/users)
-User data can be tracked by sending POST requests to `https://push.userlist.com/users`.
-The only required parameter is identifier which is a unique identifier for that user within your application.
-This can either be the user’s primary key in your database, a generated tracking identifier or their email address
-(we don’t recommend using email address though, because it’s less reliable). Whatever you choose, make please keep
-in mind that it’ll be the way Userlist identifies this user moving forward.
-
-```
-response = userlist_client.push_users(
-    identifier="user_test",
-    email='test@example.net',
-    properties={"first_name": "Test2","last_name": "Testing2"}
-)
+```bash
+pip install userlist
 ```
 
-### Deleting users (/users/{{identifier}})
-You can remove user data by sending a DELETE request to `https://push.userlist.com/users/{{identifier}}`.
-The identifier is the same one you sent when sending the user data initially. We’ll process your deletion request within
-a few of moments and remove the user, all their events, as well as all their messages. All campaigns will immediately
-be stopped. If you send any data or event with this property after requesting a deletion, we’ll treat it as fresh and
-create a new user.
+## Configuration
 
+The only required configuration is the Push API key. You can get your Push API key via the [Push API settings](https://app.userlist.com/settings/push) in your Userlist account.
+
+Configuration values can be set when creating a new push client or via environment variables. The environment takes precedence over values provided during the initialization process.
+
+**Configuration via environment variables**
+
+```bash
+USERLIST_PUSH_KEY=401e5c498be718c0a38b7da7f1ce5b409c56132a49246c435ee296e07bf2be39
 ```
-response = userlist_client.delete_users(
-    'user_test'
-)
 
- ```
+**Configuration during initialization**
 
-### Tracking company data (/companies)
-Company data can be tracked by sending POST requests to `https://push.userlist.com/companies`.
-The only required parameter is identifier which is a unique identifier for that company within your application.
-This can either be the company's primary key in your database, or some kind of generated tracking identifier.
-Whatever you choose, make please keep in mind that it’ll be the way Userlist identifies this company moving forward.
+```python
+from userlist import Push
+
+userlist = Push(push_key='401e5c498be718c0a38b7da7f1ce5b409c56132a49246c435ee296e07bf2be39')
 ```
-response = userlist_client.push_companies(
-    identifier="company_test",
-    name='Example, Inc.',
-    properties={
-    "industry": "Testing",
-    "billing_plan": "enterprise"
-  },
-    relationships=[
-    {
-      "user": "user_test",
-      "properties": {
-        "role": "owner"
-      }
+
+## Usage
+
+Before tracking user or event data, create a new push client. If you configured your push key via environment variables there's nothing to add. Otherwise, see the example above.
+
+```python
+from userlist import Push
+userlist = Push()
+```
+
+### Tracking Users
+
+#### Creating & updating Users
+
+```python
+user = {
+    'identifier': 'user-1',
+    'email': 'user@example.com',
+    'properties': {
+        'first_name': 'Jane',
+        'last_name': 'Doe'
     }
-  ]
-)
- ```
+}
 
-### Deleting Companies (/companies/{{identifier}})
-You can remove company data by sending a DELETE request to `https://push.userlist.com/companies/{{identifier}}`.
-The identifier is the same one you sent when sending the company data initially. We’ll process your deletion request
-within a few of moments and remove the company, all its events, as well as all relationships to users. The users that
-where part of that company are not deleted automatically. If you send any data or event with this company after
-requesting a deletion, we’ll treat it as fresh and create a new company record.
+userlist.users.push(user)
 
+# Aliases
+userlist.user(user)
+userlist.users.create(user)
 ```
-response = userlist_client.delete_companies(
-    'company_test'
-)
- ```
 
-### Tracking relationships (/relationships)
-Userlist allows you to track relationships between users and companies. It's possible to track many-to-many
-relationships between users and companies. Creating a relationship needs at least two pieces of information:
-a user and a company.
+#### Deleting Users
+
+```python
+userlist.users.delete('user-1')
+userlist.users.delete(user)
 ```
-response = userlist_client.push_relationships(
-    user="user_test",
-    company='company_test',
-    properties={
-    "role": "admin"
-  }
-)
- ```
 
-### Deleting relationships (/relationships/{{user-identifier}}/{{company-identifier}})
-You can remove a relationship data by sending a DELETE request to
-`https://push.userlist.com/relationships/{{user-identifier}}/{{company-identifier}}`. We’ll process your deletion
-request within a few of moments and remove the relationship between this user and this company. Both the associated user
-and company are not deleted automatically.
+### Tracking Companies
+
+#### Creating & updating Companies
+
+```python
+company = {
+    'identifier': 'company-1',
+    'name': 'Example, Inc.',
+    'properties': {
+        'industry': 'Software Testing'
+    }
+}
+
+userlist.companies.push(company)
+
+# Aliases
+userlist.company(company)
+userlist.companies.create(company)
 ```
-response = userlist_client.delete_relationships(
-    'user_test',
-    'company_test'
-)
- ```
 
-### Tracking events (/events)
-Similar to tracking user or company data, tracking events works by sending POST requests to `https://push.userlist.com/events`.
-Tracking an event requires at least two pieces of information: a name, and a user or company identifier.
-Other parameters are optional.
+#### Deleting Companies
+
+```python
+userlist.companies.delete('company-1')
+userlist.companies.delete({'identifier': 'company-1'})
 ```
-response = userlist_client.push_events(
-    name="product_purchased",
-    company='company_test',
-    properties={
-    "product": "Flowers",
-    "price": "$12.99"
-  }
-)
- ```
 
-## Feedback
+### Tracking Relationships
 
-Feel free to contact us if you have spot a bug or have any suggestion at benedikt`[at]`benediktdeicke.com
+#### Creating & updating Relationships
+
+```python
+relationship = {
+    'user': 'user-1',
+    'company': 'company-1',
+    'properties': {
+        'role': 'admin'
+    }
+}
+
+userlist.relationships.push(relationship)
+
+# Aliases
+userlist.relationship(relationship)
+userlist.relationships.create(relationship)
+```
+
+This is equivalent to specifying the relationship on the user model:
+
+```python
+user = {
+    'identifier': 'user-1',
+    'relationships': [{
+        'company': 'company-1',
+        'properties': {
+            'role': 'admin'
+        }
+    }]
+}
+
+userlist.users.push(user)
+```
+
+Or specifying the relationship on the company model:
+
+```python
+company = {
+    'identifier': 'company-1',
+    'relationships': [{
+        'user': 'user-1',
+        'properties': {
+            'role': 'admin'
+        }
+    }]
+}
+
+userlist.companies.push(company)
+```
+
+#### Deleting Relationships
+
+```python
+relationship = {
+    'user': 'user-1',
+    'company': 'company-1'
+}
+
+userlist.relationships.delete(relationship)
+```
+
+### Tracking Events
+
+```python
+event = {
+    'name': 'project_created',
+    'user': 'user-1',
+    'properties': {
+        'name': 'Example Project'
+    }
+}
+
+userlist.events.push(event)
+
+# Aliases
+userlist.event(event)
+userlist.events.create(event)
+```
+
+### Sending Transactional Messages
+
+```python
+message = {
+    'user': 'user-1',
+    'template': 'welcome-email',
+    'properties': {
+        'account_name': 'Example, Inc.',
+        'billing_plan': 'Pro'
+    }
+}
+
+userlist.messages.push(message)
+
+# Aliases
+userlist.message(message)
+userlist.messages.create(message)
+```
+
+## Contributing
+
+Bug reports and pull requests are welcome on GitHub at https://github.com/userlist/userlist-python. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+
+## License
+
+The library is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
+
+## Code of Conduct
+
+Everyone interacting in the Userlist project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/userlist/userlist-python/blob/master/CODE_OF_CONDUCT.md).
+
+## What is Userlist?
+
+[![Userlist](https://userlist.com/images/external/userlist-logo-github.svg)](https://userlist.com/)
+
+[Userlist](https://userlist.com/) allows you to onboard and engage your SaaS users with targeted behavior-based campaigns using email or in-app messages.
+
+Userlist was started in 2017 as an alternative to bulky enterprise messaging tools. We believe that running SaaS products should be more enjoyable. Learn more [about us](https://userlist.com/about-us/).

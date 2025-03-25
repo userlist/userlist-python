@@ -1,23 +1,49 @@
-[tool.poetry]
-name = "userlist-python"
-version = "0.2.0"
-description = "Official UserList SDK for Python"
-authors = ["Maksym Sugonyaka <maksym@newscatcherapi.com>", "Benedikt Deicke <benedikt@userlist.com>"]
-readme = "README.md"
-
-homepage = "https://userlist.com/"
-license = "MIT"
-keywords = ["Emailing", "Userlist", "marketing"]
-
-[tool.poetry.dependencies]
-python = "^3.7"
-pendulum = "^1.4"
-requests = "^2.24.0"
-
-[tool.poetry.dev-dependencies]
-pytest = "^5.2"
-responses = "^0.18.0"
-
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.poetry]
+name = "userlist"
+version = "0.3.0"
+description = "Python client for the Userlist API"
+homepage = "https://github.com/userlist/userlist-python"
+repository = "https://github.com/userlist/userlist-python"
+authors = [
+    "Benedikt Deicke <benedikt@userlist.com>",
+    "Maksym Sugonyaka <maksym@newscatcherapi.com>"
+]
+readme = "README.md"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[tool.poetry.dependencies]
+python = ">=3.8"
+requests = ">=2.31.0"
+
+[tool.poetry.group.dev.dependencies]
+pytest = ">=7.4.0"
+pytest-cov = ">=4.1.0"
+pytest-mock = ">=3.11.1"
+black = ">=23.9.1"
+responses = ">=0.25.0"
+
+[tool.pytest.ini_options]
+addopts = "--cov=userlist"
+testpaths = ["tests"]
+
+[tool.black]
+line-length = 88
+target-version = ["py38"]
+exclude = '''
+/(
+    \.git
+    | \.mypy_cache
+    | \.tox
+    | \.venv
+    | build
+    | dist
+)/
+'''
