@@ -25,9 +25,9 @@ USERLIST_PUSH_KEY=401e5c498be718c0a38b7da7f1ce5b409c56132a49246c435ee296e07bf2be
 **Configuration during initialization**
 
 ```python
-from userlist import Push
+from userlist import Userlist
 
-userlist = Push(push_key='401e5c498be718c0a38b7da7f1ce5b409c56132a49246c435ee296e07bf2be39')
+userlist = Userlist(push_key='401e5c498be718c0a38b7da7f1ce5b409c56132a49246c435ee296e07bf2be39')
 ```
 
 ## Usage
@@ -35,8 +35,8 @@ userlist = Push(push_key='401e5c498be718c0a38b7da7f1ce5b409c56132a49246c435ee296
 Before tracking user or event data, create a new push client. If you configured your push key via environment variables there's nothing to add. Otherwise, see the example above.
 
 ```python
-from userlist import Push
-userlist = Push()
+from userlist import Userlist
+userlist = Userlist()
 ```
 
 ### Tracking Users
