@@ -24,3 +24,9 @@ def test_relationship_creation_with_all_fields():
 def test_relationship_creation_with_none_data():
     with pytest.raises(ValueError, match="data parameter is required"):
         Relationship(None)
+
+
+def test_relationship_missing_attr():
+    relationship = Relationship({"user": "user-123", "company": "company-123"})
+    with pytest.raises(AttributeError):
+        _ = relationship.non_existent_attribute

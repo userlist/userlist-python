@@ -1,6 +1,7 @@
 import pytest
 
 from userlist.resources.company import Company
+from userlist.resources.relationship import Relationship
 
 
 def test_company_creation_with_basic_fields():
@@ -28,3 +29,9 @@ def test_company_creation_with_none_data():
 def test_company_creation_with_string():
     company = Company("company-123")
     assert company.data["identifier"] == "company-123"
+
+
+def test_company_missing_attr():
+    company = Company({"identifier": "company-123"})
+    with pytest.raises(AttributeError):
+        _ = company.non_existent_attribute

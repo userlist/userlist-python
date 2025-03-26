@@ -28,3 +28,9 @@ def test_event_creation_with_all_fields():
 def test_event_creation_with_none_data():
     with pytest.raises(ValueError, match="data parameter is required"):
         Event(None)
+
+
+def test_event_missing_attr():
+    event = Event({"name": "logged_in"})
+    with pytest.raises(AttributeError):
+        _ = event.non_existent_attribute

@@ -25,3 +25,9 @@ def test_message_creation_with_all_fields():
 def test_message_creation_with_none_data():
     with pytest.raises(ValueError, match="data parameter is required"):
         Message(None)
+
+
+def test_message_missing_attr():
+    message = Message({"template": "welcome_email"})
+    with pytest.raises(AttributeError):
+        _ = message.non_existent_attribute

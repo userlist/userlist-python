@@ -27,3 +27,9 @@ def test_user_creation_with_none_data():
 def test_user_creation_with_string():
     user = User("user-123")
     assert user.identifier == "user-123"
+
+
+def test_user_missing_attr():
+    user = User({"identifier": "user-123"})
+    with pytest.raises(AttributeError):
+        _ = user.non_existent_attribute
