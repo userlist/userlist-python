@@ -1,5 +1,6 @@
 import json
 import requests
+from .encoder import Encoder
 
 
 class Client:
@@ -21,7 +22,11 @@ class Client:
         response = self.session.request(
             method,
             url,
-            **({"data": json.dumps(payload)} if payload is not None else {}),
+            **(
+                {"data": json.dumps(payload, cls=Encoder)}
+                if payload is not None
+                else {}
+            ),
             timeout=self.timeout,
         )
         response.raise_for_status()
