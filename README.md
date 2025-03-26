@@ -7,7 +7,7 @@ This library helps with integrating Userlist into Python applications.
 This library can be installed via pip:
 
 ```bash
-pip install userlist
+pip install userlist-python
 ```
 
 ## Configuration

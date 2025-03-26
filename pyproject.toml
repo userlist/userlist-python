@@ -3,7 +3,7 @@ requires = ["poetry-core>=1.0.0", "poetry-dynamic-versioning>=1.0.0,<2.0.0"]
 build-backend = "poetry_dynamic_versioning.backend"
 
 [tool.poetry]
-name = "userlist"
+name = "userlist-python"
 version = "0.0.0"
 description = "Python client for the Userlist API"
 homepage = "https://github.com/userlist/userlist-python"
@@ -17,6 +17,9 @@ classifiers = [
     "Programming Language :: Python :: 3",
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
+]
+packages = [
+    { include = "userlist", from = "src" },
 ]
 
 [tool.poetry.dependencies]
