@@ -52,4 +52,4 @@ exclude = '''
 '''
 [tool.poetry-dynamic-versioning]
 enable = true
-vcs = ["git"]
+vcs = "git"
